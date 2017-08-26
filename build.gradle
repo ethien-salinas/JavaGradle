@@ -1,7 +1,9 @@
 group 'org.certificatic'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
 
 repositories {
     mavenCentral()
@@ -9,4 +11,18 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    def tomcatVersion = '8.0.42'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.3'
+    }
 }

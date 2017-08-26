@@ -1,2 +1,2 @@
 rootProject.name = 'JavaGradle'
-
+include ":utils",":web"

@@ -6,12 +6,9 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron">
-        <h1 class="display-3">Web Component Development!</h1>
-        <p class="lead">With Servlet and JSP TM Technologies</p>
-        <hr class="my-4">
-      </div>
-      <form action="TestServlet">
+      <h1>Web Component Development!</h1>
+      <h3>With Servlet and JSP TM Technologies</h3>
+      <form action="TestServlet" method="POST">
         <div class="form-group">
           <label for="year">Year</label>
           <input

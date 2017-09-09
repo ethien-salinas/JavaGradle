@@ -12,11 +12,14 @@ public class TestServlet extends javax.servlet.http.HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet TestServlet</title>");
+            out.println("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css' integrity='sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M' crossorigin='anonymous'>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getRemotePort()+ "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getMethod()+ "</h1>");
+            out.println("<h3>Servlet TestServlet at " + request.getParameter("year")+ "</h3>");
+            out.println("<h3>Servlet TestServlet at " + request.getParameter("title")+ "</h3>");
             out.println("</body>");
             out.println("</html>");
         }

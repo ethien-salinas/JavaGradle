@@ -18,6 +18,7 @@ public class TestServlet extends javax.servlet.http.HttpServlet {
             out.println("<h1>Servlet TestServlet at " + request.getRemotePort()+ "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getMethod()+ "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getHeader("User-Agent")+ "</h1>");
+            out.println("<h1>Servlet TestServlet at " + request.getSession().getAttribute("sessionAttribute")+ "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -25,6 +26,8 @@ public class TestServlet extends javax.servlet.http.HttpServlet {
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         RequestDispatcher rd = request.getRequestDispatcher("view.jsp");
+        request.getSession().setAttribute("sessionAttribute", "Ethien sessionAttribute");
+        System.out.println(request.getSession().getAttribute("sessionAttribute"));
         rd.forward(request, response);
     }
 }

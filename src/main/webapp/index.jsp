@@ -44,5 +44,6 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+    <% request.getSession().setAttribute("sessionAttribute", "Ethien sessionAttribute");%>
   </body>
 </html>

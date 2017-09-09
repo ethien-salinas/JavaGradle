@@ -8,5 +8,7 @@
     <span>${param.year}</span>
     <span>${param.season}</span>
     <span>${param.title}</span>
+    <span>${sessionScope.sessionAttribute}</span>
+    <span><%= request.getSession().getAttribute("sessionAttribute") %></span>
 </body>
 </html>

@@ -17,6 +17,7 @@ public class TestServlet extends javax.servlet.http.HttpServlet {
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getRemotePort()+ "</h1>");
             out.println("<h1>Servlet TestServlet at " + request.getMethod()+ "</h1>");
+            out.println("<h1>Servlet TestServlet at " + request.getHeader("User-Agent")+ "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

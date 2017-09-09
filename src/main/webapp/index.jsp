@@ -11,19 +11,20 @@
         <p class="lead">With Servlet and JSP TM Technologies</p>
         <hr class="my-4">
       </div>
-      <form action="TestServlet" method="GET">
+      <form action="TestServlet">
         <div class="form-group">
           <label for="year">Year</label>
           <input
             type="number"
             class="form-control"
             id="year"
+            name="year"
             aria-describedby="yearHelp"
             placeholder="Enter year">
         </div>
         <div class="form-group">
           <label for="season">Season</label>
-          <select class="form-control" id="season">
+          <select class="form-control" id="season" name="season">
             <option value='Spring'>Spring</option>
             <option value='Summer'>Summer</option>
             <option value='Fall'>Fall</option>
@@ -36,6 +37,7 @@
             type="text"
             class="form-control"
             id="title"
+            name="title"
             aria-describedby="titleHelp"
             placeholder="Enter title">
         </div>

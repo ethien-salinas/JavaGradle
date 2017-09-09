@@ -8,7 +8,7 @@
     <div class="container">
       <h1>Web Component Development!</h1>
       <h3>With Servlet and JSP TM Technologies</h3>
-      <form action="TestServlet" method="POST">
+      <form action="TestServlet">
         <div class="form-group">
           <label for="year">Year</label>
           <input
@@ -41,5 +41,6 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+    <% request.getSession().setAttribute("ts-session-value", "Este valor viaja como parte del objeto session"); %>
   </body>
 </html>

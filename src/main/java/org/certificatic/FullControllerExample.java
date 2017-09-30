@@ -3,7 +3,7 @@ package org.certificatic;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 
-@javax.servlet.annotation.WebServlet(name = "FullControllerExample", urlPatterns = {"/FullControllerExample"})
+@javax.servlet.annotation.WebServlet(name = "FullControllerExample", urlPatterns = {"/FullControllerExample", "/fullcontroller.do"})
 public class FullControllerExample extends javax.servlet.http.HttpServlet {
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {

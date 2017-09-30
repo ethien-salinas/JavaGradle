@@ -6,7 +6,7 @@ import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@javax.servlet.annotation.WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet"})
+@javax.servlet.annotation.WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet", "/show-view.do"})
 public class TestServlet extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {

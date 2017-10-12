@@ -6,6 +6,10 @@
   </head>
   <body>
     <div class="container">
+      test: ${nonExistent} y otra cadena <br/>
+      ${3 div 4} <br/>
+      ${1 + 2 * 4} <br/>
+      ${not false} <br/>
       <h1>Web Component Development!</h1>
       <h3>With Servlet and JSP TM Technologies</h3>
       <form action="TestServlet">

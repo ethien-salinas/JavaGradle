@@ -7,3 +7,4 @@ web/
 .gradle/
 .idea/
 .settings/
+.vscode/

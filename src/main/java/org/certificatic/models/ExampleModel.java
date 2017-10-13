@@ -1,6 +1,7 @@
-package org.certificatic;
+package org.certificatic.models;
 
 public class ExampleModel {
+
 	private String name;
 
 	public void setName(String s){

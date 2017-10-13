@@ -1,8 +1,8 @@
 package org.certificatic;
 
 import javax.servlet.RequestDispatcher;
+import org.certificatic.models.ExampleModel;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @javax.servlet.annotation.WebServlet(name = "FullControllerExample", urlPatterns = {"/FullControllerExample"})
 public class FullControllerExample extends javax.servlet.http.HttpServlet {

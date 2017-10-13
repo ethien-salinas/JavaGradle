@@ -1,20 +1,20 @@
-[  
+[
     {  
-        "name":"John",
-        "city":"Berlin",
-        "cars":[  
-            "audi",
-            "bmw"
+        "name":"Ethien",
+        "city":"Mexico",
+        "cars":[
+            "mustang",
+            "camaro"
         ],
-        "job":"Teacher"
+        "job":"Programmer"
     },
-    {  
-        "name":"Mark",
-        "city":"Oslo",
-        "cars":[  
-            "VW",
-            "Toyata"
+    {
+        "name":"Ariadna",
+        "city":"Guadalajara",
+        "cars":[
+            "bmw",
+            "audi"
         ],
-        "job":"Doctor"
+        "job":"Psychology"
     }
 ]

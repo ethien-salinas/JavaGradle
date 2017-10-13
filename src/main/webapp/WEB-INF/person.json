@@ -1,0 +1,22 @@
+[
+    {  
+        "name":"Ethien Salinas",
+        "age": 33,
+        "city":"Mexico",
+        "books":[
+            "the innovators",
+            "fear to freedom"
+        ],
+        "job":"Programmer"
+    },
+    {
+        "name":"Ariadna Espinosa",
+        "age": 31,
+        "city":"Guadalajara",
+        "books":[
+            "the psychoanalyst",
+            "ethics for amador"
+        ],
+        "job":"Psychology"
+    }
+]

@@ -1,8 +1,12 @@
 package org.certificatic;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -48,6 +52,25 @@ public class JsonController extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest resquest, HttpServletResponse response) throws IOException {
+        Person person = new Person("Lalo", 22, "LA", "hipster", null);
+        JSONObject jsonObj = new JSONObject();
+        JSONArray list = new JSONArray();
+        list.add("harry potter");
+        jsonObj.put("name", person.getName());
+        jsonObj.put("city", person.getCity());
+        jsonObj.put("age", person.getAge());
+        jsonObj.put("books", list);
+        //TODO: try to read this file in get call
+        try (FileWriter file = new FileWriter("test.json")) {
+            file.write(jsonObj.toJSONString());
+            file.flush();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

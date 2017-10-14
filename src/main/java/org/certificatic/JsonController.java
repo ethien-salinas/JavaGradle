@@ -1,20 +1,15 @@
 package org.certificatic;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
-
 import org.certificatic.models.Person;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,16 +18,15 @@ import org.json.simple.parser.ParseException;
 
 @WebServlet(name = "JsonController", urlPatterns = { "/JsonController", "/json-controller" })
 public class JsonController extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
+    private String fileName = "/WEB-INF/person.json";
 
     @Override
-    protected void doGet(HttpServletRequest resquest, HttpServletResponse response) throws IOException {
-
-        JSONParser parser = new JSONParser();
-
-        try (PrintWriter out = response.getWriter()) {
-            String filename = "/WEB-INF/person.json";
-            InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(filename));
+    protected void doGet(HttpServletRequest resquest, HttpServletResponse response) {
+        try (PrintWriter out = response.getWriter();
+            InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName))) {
+            JSONParser parser = new JSONParser();
             JSONArray arrayElement = (JSONArray) parser.parse(isr);
             for (Object o : arrayElement) {
                 JSONObject jsonPerson = (JSONObject) o;
@@ -57,20 +51,35 @@ public class JsonController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest resquest, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest resquest, HttpServletResponse response) {
+        // TODO: load this model with incomming data
+        // load the model
         Person person = new Person("Lalo", 22, "LA", "hipster", null);
+        // create json object
         JSONObject jsonObj = new JSONObject();
         JSONArray list = new JSONArray();
-        list.add("harry potter");
+        list.add("harry potter and the philosopher's stone");
+        list.add("harry potter and the prisoner of azkaban");
         jsonObj.put("name", person.getName());
         jsonObj.put("city", person.getCity());
         jsonObj.put("age", person.getAge());
         jsonObj.put("books", list);
-        //TODO: try to read this file in get call
-        try (FileWriter file = new FileWriter("test.json")) {
-            file.write(jsonObj.toJSONString());
+        try (InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName));
+            FileWriter file = new FileWriter(getServletContext().getRealPath("/") + fileName)){
+            // before to write, retreive the actual content of the file
+            JSONParser parser = new JSONParser();
+            JSONArray arrayElement = (JSONArray) parser.parse(isr);
+            // append the new objet to the json
+            arrayElement.add(jsonObj);
+            // write the result
+            file.write(arrayElement.toJSONString());
             file.flush();
+            file.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

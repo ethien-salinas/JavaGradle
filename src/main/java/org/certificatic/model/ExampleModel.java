@@ -1,4 +1,4 @@
-package org.certificatic;
+package org.certificatic.model;
 
 public class ExampleModel {
 	private String name;

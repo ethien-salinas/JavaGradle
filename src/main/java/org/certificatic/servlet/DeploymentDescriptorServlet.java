@@ -1,4 +1,4 @@
-package org.certificatic;
+package org.certificatic.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

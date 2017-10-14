@@ -1,4 +1,4 @@
-package org.certificatic;
+package org.certificatic.servlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;

@@ -1,6 +1,5 @@
 package org.certificatic.servlet;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -20,17 +19,17 @@ import org.json.simple.parser.JSONParser;
 public class JsonController extends HttpServlet{
 
     private static final long serialVersionUID = 245875312L;
-
-    private String filePath = "/home/ethien/IdeaProjects/JavaGradle/src/main/webapp/WEB-INF/person.json";
     private String fileName = "/WEB-INF/person.json";    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        JSONParser jsonParser = new JSONParser();
-        try(PrintWriter out = response.getWriter()) {
-            Object obj = jsonParser.parse(new FileReader(filePath));
-            JSONArray json = (JSONArray)obj;
-            for(Object o: json){
+        // use of try/catch with resources
+        try (PrintWriter out = response.getWriter();
+            InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName))) {
+            // parse and manipulate the InputStreamReader read resul of person.json
+            JSONParser parser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) parser.parse(isr);
+            for(Object o: jsonArray){
                 JSONObject jsonPerson = (JSONObject)o;
                 long id = (Long)jsonPerson.get("id");
                 String name = (String) jsonPerson.get("name");
@@ -43,6 +42,8 @@ public class JsonController extends HttpServlet{
                 for (Object book : books) {
                     books_.add((String)book);
                 }
+                // create and return a Person foreach jsonObject found
+                // TODO: return in jsp
                 out.println(new Person(id, name, (int)age, city, gender, job, books));
             }
         } catch (Exception e) {
@@ -70,7 +71,7 @@ public class JsonController extends HttpServlet{
         JSONArray books_ = new JSONArray();
         books_.addAll(books);
         jsonPerson.put("id", person.getId());
-        jsonPerson.put("name", person.getId());
+        jsonPerson.put("name", person.getName());
         jsonPerson.put("age", person.getAge());
         jsonPerson.put("city", person.getCity());
         jsonPerson.put("gender", person.getGender());
@@ -80,10 +81,10 @@ public class JsonController extends HttpServlet{
         try (InputStreamReader isr = new InputStreamReader(this.getServletContext().getResourceAsStream(fileName));
             FileWriter file = new FileWriter(this.getServletContext().getRealPath("/") + fileName)){
             JSONParser jsonParser = new JSONParser();
-            JSONArray arrayElement = (JSONArray) jsonParser.parse(isr);            
-            arrayElement.add(jsonPerson);
+            JSONArray arrayArray = (JSONArray) jsonParser.parse(isr);
+            arrayArray.add(jsonPerson);
             // write to the file
-            file.write(arrayElement.toJSONString());
+            file.write(arrayArray.toJSONString());
             file.flush();
         } catch (Exception e) {
             e.printStackTrace();

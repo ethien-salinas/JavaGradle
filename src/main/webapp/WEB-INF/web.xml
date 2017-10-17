@@ -5,7 +5,7 @@
 
     <servlet>
         <servlet-name>DeploymentDescriptorServlet</servlet-name>
-        <servlet-class>org.certificatic.DeploymentDescriptorServlet</servlet-class>
+        <servlet-class>org.certificatic.servlet.DeploymentDescriptorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeploymentDescriptorServlet</servlet-name>

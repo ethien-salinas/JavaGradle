@@ -1,9 +1,12 @@
 package org.certificatic.servlet;
 
+import java.io.BufferedReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,29 +14,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.certificatic.model.Person;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @WebServlet(name = "JsonController", urlPatterns = { "/JsonController", "/json-controller" })
 public class JsonController extends HttpServlet{
 
     private static final long serialVersionUID = 245875312L;
-    private String fileName = "/WEB-INF/person.json";    
+    private String fileName = "/WEB-INF/person.json";
+
+    private JSONArray readJsonFromFile(){
+        JSONArray jsonArray = null;
+        String result = "";
+        try (InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName))) {
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                line = br.readLine();
+            }
+            result = sb.toString();
+            jsonArray = new JSONArray(result);
+            isr.close();
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+        return jsonArray;
+     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        // use of try/catch with resources
-        try (PrintWriter out = response.getWriter();
-            InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName))) {
-            // parse and manipulate the InputStreamReader read resul of person.json
-            JSONParser parser = new JSONParser();
-            JSONArray jsonArray = (JSONArray) parser.parse(isr);
+        try (PrintWriter out = response.getWriter()){
+            JSONArray jsonArray = this.readJsonFromFile();
             for(Object o: jsonArray){
                 JSONObject jsonPerson = (JSONObject)o;
-                long id = (Long)jsonPerson.get("id");
+                int id = (Integer)jsonPerson.get("id");
                 String name = (String) jsonPerson.get("name");
-                long age = (Long)jsonPerson.get("age");
+                int age = (Integer)jsonPerson.get("age");
                 String city = (String) jsonPerson.get("city");
                 String gender = (String) jsonPerson.get("gender");
                 String job = (String) jsonPerson.get("job");
@@ -44,19 +62,16 @@ public class JsonController extends HttpServlet{
                 }
                 // create and return a Person foreach jsonObject found
                 // TODO: return in jsp
-                out.println(new Person(id, name, (int)age, city, gender, job, books));
+                out.println(new Person(id, name, age, city, gender, job, books_));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
         //TODO: read the value from the request
-        ArrayList<String> books = new ArrayList<>();
-        books.add("Mastering Java 9");
-        books.add("Java 9 Modularity: Patterns and Practices for Developing Maintainable Applications");
         Person person = new Person(
             3,
             "Daniela",
@@ -64,12 +79,17 @@ public class JsonController extends HttpServlet{
             "CDMX",
             "female",
             "Master Programmer",
-            books
+            new ArrayList<String>(
+                Arrays.asList(
+                    "Mastering Java 9",
+                    "Java 9 Modularity: Patterns and Practices for Developing Maintainable Applications"
+                )
+            )
         );
         // create JSONObject with the incomming values
         JSONObject jsonPerson = new JSONObject();
         JSONArray books_ = new JSONArray();
-        books_.addAll(books);
+        books_.put(person);
         jsonPerson.put("id", person.getId());
         jsonPerson.put("name", person.getName());
         jsonPerson.put("age", person.getAge());
@@ -77,18 +97,15 @@ public class JsonController extends HttpServlet{
         jsonPerson.put("gender", person.getGender());
         jsonPerson.put("job", person.getJob());
         jsonPerson.put("books", person.getBooks());
-        // retreive the current content of the file
-        try (InputStreamReader isr = new InputStreamReader(this.getServletContext().getResourceAsStream(fileName));
-            FileWriter file = new FileWriter(this.getServletContext().getRealPath("/") + fileName)){
-            JSONParser jsonParser = new JSONParser();
-            JSONArray arrayArray = (JSONArray) jsonParser.parse(isr);
-            arrayArray.add(jsonPerson);
-            // write to the file
-            file.write(arrayArray.toJSONString());
+        JSONArray jsonArray = this.readJsonFromFile();
+        try (FileWriter file = new FileWriter(this.getServletContext().getRealPath("/") + fileName)){
+            jsonArray.put(jsonPerson);
+            file.write(jsonArray.toString());
             file.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            file.close();
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Person{
 
-    private long id;
+    private int id;
     private String name;
     private int age;
     private String city;
@@ -14,7 +14,7 @@ public class Person{
 
     public Person(){}
 
-    public Person(long id, String name, int age, String city, String gender, String job, ArrayList<String> books){
+    public Person(int id, String name, int age, String city, String gender, String job, ArrayList<String> books){
         this.id = id;
         this.name = name;
         this.age = age;
@@ -24,11 +24,11 @@ public class Person{
         this.books = books;
     }
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-    public void setId(long id) {
+    public void setId(int id) {
 		this.id = id;
 	}
 

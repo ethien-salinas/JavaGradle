@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,8 @@ public class JsonController extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
         try (PrintWriter out = response.getWriter()){
             JSONArray jsonArray = this.readJsonFromFile();
+            RequestDispatcher rd = request.getRequestDispatcher("persons.jsp");
+            ArrayList<Person> persons = new ArrayList<>();
             for(Object o: jsonArray){
                 JSONObject jsonPerson = (JSONObject)o;
                 int id = (Integer)jsonPerson.get("id");
@@ -60,11 +64,13 @@ public class JsonController extends HttpServlet{
                 for (Object book : books) {
                     books_.add((String)book);
                 }
-                // create and return a Person foreach jsonObject found
-                // TODO: return in jsp
-                out.println(new Person(id, name, age, city, gender, job, books_));
+                persons.add(new Person(id, name, age, city, gender, job, books_));
             }
+            request.setAttribute("persons", persons);
+            rd.forward(request, response);
         } catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
 			e.printStackTrace();
 		}
     }
@@ -82,7 +88,7 @@ public class JsonController extends HttpServlet{
             new ArrayList<String>(
                 Arrays.asList(
                     "Mastering Java 9",
-                    "Java 9 Modularity: Patterns and Practices for Developing Maintainable Applications"
+                    "Java 9 Modularity"
                 )
             )
         );

@@ -4,7 +4,7 @@ This project shows how to use JavaWeb technology running the project with the Gr
 
 To run the project
 ```sh
-$ ./gradlew tomcatRun
+$ ./gradlew appRun
 ```
 
 To clean the output folders

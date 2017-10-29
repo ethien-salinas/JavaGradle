@@ -6,10 +6,6 @@
   </head>
   <body>
     <div class="container">
-      test: ${nonExistent} y otra cadena <br/>
-      ${3 div 4} <br/>
-      ${1 + 2 * 4} <br/>
-      ${not false} <br/>
       <h1>Web Component Development!</h1>
       <h3>With Servlet and JSP TM Technologies</h3>
       <form action="TestServlet">
@@ -44,6 +40,17 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+    </div>
+    <div class="container">
+      <div class="card" style="width: 30rem;">
+        <div class="card-body">
+          <h4 class="card-title">Some JSTL expressions</h4>
+          <p class="card-text">test: ${nonExistent} y otra cadena</p>
+          <p class="card-text">${3 div 4}</p>
+          <p class="card-text">${1 + 2 * 4}</p>
+          <p class="card-text">${not false}</p>
+        </div>
+      </div>
     </div>
     <% request.getSession().setAttribute("ts-session-value", "Este valor viaja como parte del objeto session"); %>
   </body>

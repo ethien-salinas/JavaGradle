@@ -60,9 +60,7 @@ public class JsonController extends HttpServlet{
                 String job = (String) jsonPerson.get("job");
                 JSONArray books = (JSONArray) jsonPerson.get("books");
                 ArrayList<String> books_ = new ArrayList<String>();
-                for (Object book : books) {
-                    books_.add((String)book);
-                }
+                books.forEach((book)->books_.add((String)book));
                 persons.add(new Person(id, name, age, city, gender, job, books_));
             }
             RequestDispatcher rd = request.getRequestDispatcher("persons.jsp");

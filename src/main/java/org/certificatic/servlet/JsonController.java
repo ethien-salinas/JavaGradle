@@ -50,8 +50,8 @@ public class JsonController extends HttpServlet{
         try {
             JSONArray jsonArray = this.readJsonFromFile();
             ArrayList<Person> persons = new ArrayList<>();
-            for(Object o: jsonArray){
-                JSONObject jsonPerson = (JSONObject)o;
+            jsonArray.forEach((obj)->{
+                JSONObject jsonPerson = (JSONObject)obj;
                 int id = (Integer)jsonPerson.get("id");
                 String name = (String) jsonPerson.get("name");
                 int age = (Integer)jsonPerson.get("age");
@@ -60,9 +60,9 @@ public class JsonController extends HttpServlet{
                 String job = (String) jsonPerson.get("job");
                 JSONArray books = (JSONArray) jsonPerson.get("books");
                 ArrayList<String> books_ = new ArrayList<String>();
-                books.forEach((book)->books_.add((String)book));
+                books.forEach( (book) -> books_.add( (String)book ));
                 persons.add(new Person(id, name, age, city, gender, job, books_));
-            }
+            });
             RequestDispatcher rd = request.getRequestDispatcher("persons.jsp");
             request.setAttribute("persons", persons);
             rd.forward(request, response);

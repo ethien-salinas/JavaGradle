@@ -28,7 +28,7 @@ public class JsonController extends HttpServlet{
     private JSONArray readJsonFromFile(){
         JSONArray jsonArray = null;
         String result = "";
-        try (InputStreamReader isr = new InputStreamReader(getServletContext().getResourceAsStream(fileName))) {
+        try (InputStreamReader isr = new InputStreamReader(this.getServletContext().getResourceAsStream(fileName))) {
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -47,9 +47,8 @@ public class JsonController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        try (PrintWriter out = response.getWriter()){
+        try {
             JSONArray jsonArray = this.readJsonFromFile();
-            RequestDispatcher rd = request.getRequestDispatcher("persons.jsp");
             ArrayList<Person> persons = new ArrayList<>();
             for(Object o: jsonArray){
                 JSONObject jsonPerson = (JSONObject)o;
@@ -66,6 +65,7 @@ public class JsonController extends HttpServlet{
                 }
                 persons.add(new Person(id, name, age, city, gender, job, books_));
             }
+            RequestDispatcher rd = request.getRequestDispatcher("persons.jsp");
             request.setAttribute("persons", persons);
             rd.forward(request, response);
         } catch (IOException e) {
